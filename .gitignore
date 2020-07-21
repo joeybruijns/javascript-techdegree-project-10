@@ -104,3 +104,8 @@ dist
 .tern-port
 api/.DS_Store
 .DS_Store
+.idea/
+.idea/vcs.xml
+.idea/modules.xml
+.idea/misc.xml
+.idea/javascript-techdegree-project-10.iml
