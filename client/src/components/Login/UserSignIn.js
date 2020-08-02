@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import Form from './Form';
+import Form from '../Form';
 
 export default class UserSignIn extends Component {
     state = {
@@ -44,7 +44,7 @@ export default class UserSignIn extends Component {
                             </React.Fragment>
                         )}/>
                     <p>
-                        Don't have a user account? <Link to="/signup">Click here</Link> to sign up!
+                        Don't have a user account? <Link to="/users/signup">Click here</Link> to sign up!
                     </p>
                 </div>
             </div>
