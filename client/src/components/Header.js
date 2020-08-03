@@ -1,17 +1,30 @@
 import React from 'react';
 
-const Header = () => {
-    return (
-        <div className="header">
-            <div className="bounds">
-                <h1 className="header--logo">Courses</h1>
-                <nav>
-                    <a className="signup" href="/users/signup">Sign Up</a>
-                    <a className="signin" href="/users/signin">Sign In</a>
-                </nav>
-            </div>
-        </div>
-    )
-}
+export default class Header extends React.PureComponent {
+    render() {
+        const {context} = this.props;
+        const userAuth = context.authenticateUser;
 
-export default Header;
+        return (
+            <div className="header">
+                <div className="bounds">
+                    <h1 className="header--logo">Courses</h1>
+                    <nav>
+                        {userAuth ? (
+                            <React.Fragment>
+                                <span>Welcome, [NAME]</span>
+                                <a className="signin" href="/users/signout">Sign Out</a>
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                <a className="signup" href="/users/signup">Sign Up</a>
+                                <a className="signin" href="/users/signin">Sign In</a>
+                            </React.Fragment>
+                        )}
+                    </nav>
+                </div>
+            </div>
+        )
+    }
+};
+

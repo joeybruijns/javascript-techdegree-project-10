@@ -71,7 +71,7 @@ export default class Data {
     }
 
     // POST course - create a new course
-    async createCourse(course) {
+    async createCourse(course) { // TODO: add authentication
         const response = await this.api(`/courses/create`, 'POST', course);
         if (response.status === 201) {
             return [];
@@ -82,9 +82,21 @@ export default class Data {
         }
     }
 
-    // POST course - update an existing course
-    async updateCourse(course) {
+    // PUT course - update an existing course
+    async updateCourse(id, emailAddress, password) {
 
+    }
+
+    // DELETE course - delete a course by ID
+    async deleteCourse(id, emailAddress, password) {
+        const response = await this.api(`/courses/${id}`, 'DELETE', null, true, {emailAddress, password});
+        if (response.status === 204) {
+            return [];
+        } else if (response.status === 403) {
+            return response.json().then(error => error.errors);
+        } else {
+            throw new Error();
+        }
     }
 
 }

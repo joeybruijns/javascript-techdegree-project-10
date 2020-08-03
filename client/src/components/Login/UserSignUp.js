@@ -61,7 +61,7 @@ export default class UserSignUp extends Component {
                         />
                     </div>
                     <p>&nbsp;</p>
-                    <p>Already have a user account? <a href="users/signin">Click here</a> to sign in!</p>
+                    <p>Already have a user account? <a href="/users/signin">Click here</a> to sign in!</p>
                 </div>
             </div>
         );

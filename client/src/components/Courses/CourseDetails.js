@@ -5,7 +5,8 @@ import NotFound from "../Errors/NotFound";
 export default class CourseDetails extends Component {
     state = {
         courseUser: {},
-        courseDetail: {}
+        courseDetails: {},
+        authenticatedUser: this.props.context.authenticatedUser
     }
 
     async componentDidMount() {
@@ -15,35 +16,18 @@ export default class CourseDetails extends Component {
             .then((response) => {
                 this.setState({
                     courseUser: response.course.user,
-                    courseDetail: response.course
+                    courseDetails: response.course
                 });
             });
     }
 
     render() {
         const user = this.state.courseUser;
-        const course = this.state.courseDetail;
-        // let course;
-        // if (this.state.courseDetail) {
-        //     course = this.state.courseDetail;
-        // } else {
-        //     course = <NotFound/>
-        // }
-        console.log(course);
+        const course = this.state.courseDetails;
 
         return (
             <div>
-                <div className="actions--bar">
-                    <div className="bounds">
-                        <div className="grid-100">
-                            <span>
-                                <a className="button" href="/">Update Course</a>
-                                <a className="button" href="#">Delete Course</a>
-                            </span>
-                            <a className="button button-secondary" href="/">Return to List</a>
-                        </div>
-                    </div>
-                </div>
+                {this.authenticationLevel()}
                 <div className="bounds course--detail">
                     <div className="grid-66">
                         <div className="course--header">
@@ -75,4 +59,70 @@ export default class CourseDetails extends Component {
             </div>
         )
     };
-};
+
+    // hide or show the edit/delete button, depends if the user is authorized
+    authenticationLevel = () => {
+        const userAuth = this.props.context.authenticatedUser;
+
+        if (userAuth && this.state.courseUser.id === userAuth.id) {
+            return (
+                <div className="actions--bar">
+                    <div className="bounds">
+                        <div className="grid-100">
+                            <span>
+                                <a className="button" href={this.props.location.pathname + '/update'}>Update Course</a>
+                                <a className="button" href="#" onClick={this.deleteCourse}>Delete Course</a>
+                            </span>
+                            <a className="button button-secondary" href="/">Return to List</a>
+                        </div>
+                    </div>
+                </div>
+            );
+        } else {
+            return (
+                <div className="actions--bar">
+                    <div className="bounds">
+                        <div className="grid-100">
+                            <a className="button button-secondary" href="/">Return to List</a>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    deleteCourse = (event) => {
+        event.preventDefault();
+
+        const {context} = this.props;
+        const email = this.state.authenticatedUser.emailAddress;
+        const password = this.props.context.authPassword;
+        const userID = this.state.authenticatedUser.id;
+        const userCourseID = this.state.courseUser.id;
+        const courseID = this.state.courseDetails.id;
+
+        // const {
+        //     courseDetails
+        // } = this.state;
+        //
+        // const courseID = {
+        //     courseDetails
+        // };
+
+        if (userID === userCourseID) {
+            context.data.deleteCourse(courseID, email, password)
+                .then(response => {
+                    if (response) {
+                        this.props.history.push('/forbidden');
+                        console.log(response);
+                    } else {
+                        this.props.history.push('/');
+                    }
+                }).catch(err => {
+                console.log(err);
+            });
+        } else {
+            this.props.history.push('/forbidden');
+        }
+    }
+}

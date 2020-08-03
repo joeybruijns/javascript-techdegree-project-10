@@ -39,7 +39,7 @@ class App extends Component {
                         {/*<Route path="/courses" component={CoursesWithContext}/>*/}
                         <Route path="/courses/:id" component={CourseDetailsWithContext}/>
                         <Route path="/courses/create" component={CreateCourseWithContext}/>
-                        {/*<Route path="/courses/update" component={UpdateCourseWithContext}/>*/}
+                        {/*<Route path="/courses/:id/update" component={UpdateCourseWithContext}/>*/}
                         <Route path="/courses" component={CoursesWithContext}/>
                         <Route path="/users/signup" component={UserSignUpWithContext}/>
                         <Route path="/users/signin" component={UserSignInWithContext}/>
