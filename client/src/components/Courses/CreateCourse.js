@@ -5,6 +5,7 @@ import Form from '../Form';
 
 export default class CreateCourse extends Component {
     state = {
+        authenticatedUser: this.props.context.authenticatedUser,
         title: '',
         description: '',
         estimatedTime: '',

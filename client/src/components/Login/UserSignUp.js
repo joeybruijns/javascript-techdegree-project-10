@@ -36,24 +36,28 @@ export default class UserSignUp extends Component {
                                         id="firstName"
                                         name="firstName"
                                         type="text"
+                                        value={firstName}
                                         onChange={this.change}
                                         placeholder="First name..."/>
                                     <input
                                         id="lastName"
                                         name="lastName"
                                         type="text"
+                                        value={lastName}
                                         onChange={this.change}
                                         placeholder="Last name..."/>
                                     <input
                                         id="emailAddress"
                                         name="emailAddress"
                                         type="text"
+                                        value={emailAddress}
                                         onChange={this.change}
                                         placeholder="Email address..."/>
                                     <input
                                         id="password"
                                         name="password"
                                         type="password"
+                                        value={password}
                                         onChange={this.change}
                                         placeholder="Password..."/>
                                 </React.Fragment>
@@ -61,7 +65,7 @@ export default class UserSignUp extends Component {
                         />
                     </div>
                     <p>&nbsp;</p>
-                    <p>Already have a user account? <a href="/users/signin">Click here</a> to sign in!</p>
+                    <p>Already have a user account? <a href="/signin">Click here</a> to sign in!</p>
                 </div>
             </div>
         );
@@ -102,7 +106,7 @@ export default class UserSignUp extends Component {
                 } else {
                     context.actions.signIn(emailAddress, password)
                         .then(() => {
-                            this.props.history.push('/courses'); // TODO: adjust path
+                            this.props.history.push('/'); // TODO: adjust path
                         });
                 }
             })

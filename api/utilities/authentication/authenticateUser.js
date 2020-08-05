@@ -30,7 +30,7 @@ const authenticateUser = async (req, res, next) => {
                 notAuthenticated = `Authentication failure for username: ${user.emailAddress}`;
             }
         } else {
-            notAuthenticated = `No user found for ${user.emailAddress}`;
+            notAuthenticated = `No user found for ${userCredentials.name}`;
         }
     } else {
         notAuthenticated = 'Authentication header not found..';

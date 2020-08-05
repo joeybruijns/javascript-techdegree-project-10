@@ -18,6 +18,7 @@ import Error from "./components/Errors/Error";
 import NotFound from "./components/Errors/NotFound";
 
 import withContext from "./Context";
+import PrivateRoute from "./PrivateRoute";
 
 const HeaderWithContext = withContext(Header);
 const CoursesWithContext = withContext(Courses);
@@ -36,14 +37,14 @@ class App extends Component {
                     <HeaderWithContext/>
                     <Switch>
                         <Redirect exact from="/" to="/courses"/>
-                        {/*<Route path="/courses" component={CoursesWithContext}/>*/}
+                        {/*<Route path="/" component={CoursesWithContext}/>*/}
+                        <PrivateRoute path="/courses/create" component={CreateCourseWithContext}/>
                         <Route path="/courses/:id" component={CourseDetailsWithContext}/>
-                        <Route path="/courses/create" component={CreateCourseWithContext}/>
                         {/*<Route path="/courses/:id/update" component={UpdateCourseWithContext}/>*/}
                         <Route path="/courses" component={CoursesWithContext}/>
-                        <Route path="/users/signup" component={UserSignUpWithContext}/>
-                        <Route path="/users/signin" component={UserSignInWithContext}/>
-                        <Route path="/users/signout" component={UserSignOutWithContext}/>
+                        <Route path="/signin" component={UserSignInWithContext}/>
+                        <Route path="/signup" component={UserSignUpWithContext}/>
+                        <Route path="/signout" component={UserSignOutWithContext}/>
                         <Route path="/error" component={Error}/>
                         <Route component={NotFound}/> {/*replace with PageNotFound Component??*/}
                     </Switch>

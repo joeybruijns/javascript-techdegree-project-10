@@ -33,18 +33,20 @@ export default class UserSignIn extends Component {
                                     type="text"
                                     value={emailAddress}
                                     onChange={this.change}
-                                    placeholder="Email Address..."/>
+                                    placeholder="Email Address..."
+                                />
                                 <input
                                     id="password"
                                     name="password"
                                     type="password"
                                     value={password}
                                     onChange={this.change}
-                                    placeholder="Password..."/>
+                                    placeholder="Password..."
+                                />
                             </React.Fragment>
                         )}/>
                     <p>
-                        Don't have a user account? <Link to="/users/signup">Click here</Link> to sign up!
+                        Don't have a user account? <Link to="/signup">Click here</Link> to sign up!
                     </p>
                 </div>
             </div>
@@ -64,7 +66,7 @@ export default class UserSignIn extends Component {
 
     submit = () => {
         const {context} = this.props;
-        const {from} = this.props.location.state || {from: {pathname: '/authenticated'}};
+        const {from} = this.props.location.state || {from: {pathname: '/'}};
         const {emailAddress, password} = this.state;
 
         context.actions.signIn(emailAddress, password)
@@ -75,10 +77,12 @@ export default class UserSignIn extends Component {
                     });
                 } else {
                     this.props.history.push(from);
+                    console.log('User successfully signed in!');
                 }
             })
-            .catch((error) => {
-                console.error(error);
+            .catch((err) => {
+                console.error(err);
+                console.error("=============");
                 this.props.history.push('/error');
             });
     }

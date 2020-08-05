@@ -16,10 +16,23 @@ export default class Data {
         }
 
         if (requiresAuth) {
-            const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
+            const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
             options.headers['Authorization'] = `Basic ${encodedCredentials}`;
         }
         return fetch(url, options);
+    }
+
+    // GET user - get the user from the database
+    async getUser(emailAddress, password) {
+        const response = await this.api(`/users`, 'GET', null, true, {emailAddress, password});
+        if (response.status === 200) {
+            return response.json().then(data => data);
+        } else if (response.status === 401) {
+            console.log(response);
+            return null;
+        } else {
+            throw new Error();
+        }
     }
 
     // POST user - create a new user
@@ -29,18 +42,6 @@ export default class Data {
             return [];
         } else if (response.status === 400) {
             return response.json().then(error => error.errors);
-        } else {
-            throw new Error();
-        }
-    }
-
-    // GET user - get the user from the database
-    async getUser(email, password) {
-        const response = await this.api(`/users`, 'GET', null, true, {email, password});
-        if (response.status === 200) {
-            return response.json().then(data => data);
-        } else if (response.status === 401) {
-            return null;
         } else {
             throw new Error();
         }
@@ -98,5 +99,4 @@ export default class Data {
             throw new Error();
         }
     }
-
 }
