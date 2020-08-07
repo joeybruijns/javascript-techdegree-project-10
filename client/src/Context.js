@@ -8,7 +8,6 @@ export class Provider extends Component {
 
     state = {
         authenticatedUser: Cookies.getJSON('authenticatedUser') || null,
-        // authPassword: Cookies.getJSON('authPassword') || null
     };
 
     constructor() {
@@ -33,20 +32,17 @@ export class Provider extends Component {
         );
     }
 
-    signIn = async (emailAddress, password) => {
-        const user = await this.data.getUser(emailAddress, password);
+    signIn = async (email, password) => {
+        const user = await this.data.getUser(email, password);
         if (user !== null) {
+            user.email = user.emailAddress;
+            user.password = password;
             this.setState(() => {
                 return {
                     authenticatedUser: user,
-                    // authPassword: password
                 };
             });
-            // const cookieOptions = {
-            //     expires: 1 // 1 day
-            // };
             Cookies.set('authenticatedUser', JSON.stringify(user), {expires: 1});
-            // Cookies.set('authPassword', JSON.stringify(password), {cookieOptions});
         }
         return user;
     }

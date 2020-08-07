@@ -44,10 +44,10 @@ export default class CourseDetails extends Component {
                             <ul className="course--stats--list">
                                 <li className="course--stats--list--item">
                                     <h4>Estimated Time</h4>
-                                    <h3> {course.estimatedTime} hours</h3>
+                                    <h3> {course.estimatedTime} hours</h3> {/*TODO: fix displaying for 0 hours*/}
                                 </li>
                                 <li className="course--stats--list--item">
-                                    <h4>Materials Needed</h4>
+                                    <h4>Materials Needed</h4> {/*TODO: fix rendering*/}
                                     <ul>
                                         {/*{course.materialsNeeded.map((item, i) => <li key={i}>{item}</li>)}*/}
                                     </ul>
@@ -95,32 +95,26 @@ export default class CourseDetails extends Component {
         event.preventDefault();
 
         const {context} = this.props;
-        const email = this.state.authenticatedUser.emailAddress;
-        const password = this.props.context.authPassword;
+        const userEmail = this.state.authenticatedUser.emailAddress;
+        const userPassword = this.state.authenticatedUser.password;
         const userID = this.state.authenticatedUser.id;
         const userCourseID = this.state.courseUser.id;
         const courseID = this.state.courseDetails.id;
 
-        // const {
-        //     courseDetails
-        // } = this.state;
-        //
-        // const courseID = {
-        //     courseDetails
-        // };
-
         if (userID === userCourseID) {
-            context.data.deleteCourse(courseID, email, password)
+            context.data.deleteCourse(courseID, userEmail, userPassword)
                 .then(response => {
                     if (response) {
-                        this.props.history.push('/forbidden');
                         console.log(response);
-                    } else {
                         this.props.history.push('/');
+                    } else {
+                        this.props.history.push('/forbidden');
                     }
-                }).catch(err => {
-                console.log(err);
-            });
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.props.history.push('/error');
+                });
         } else {
             this.props.history.push('/forbidden');
         }

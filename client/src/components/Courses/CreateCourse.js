@@ -5,7 +5,7 @@ import Form from '../Form';
 
 export default class CreateCourse extends Component {
     state = {
-        authenticatedUser: this.props.context.authenticatedUser,
+        authenticatedUser: this.props.context.authenticatedUser, // DELETE??
         title: '',
         description: '',
         estimatedTime: '',
@@ -27,6 +27,7 @@ export default class CreateCourse extends Component {
 
     render() {
         const {
+            authenticatedUser,
             title,
             description,
             estimatedTime,
@@ -62,15 +63,17 @@ export default class CreateCourse extends Component {
                                             id="title"
                                             name="title"
                                             type="text"
+                                            // value={title}
                                             onChange={this.change}
                                             placeholder="Course title..."
                                         /></div>
-                                        <p>By {userName}</p>
+                                        <p>By {authenticatedUser.firstName} {authenticatedUser.lastName}</p>
                                     </div>
                                     <div className="course--description">
                                         <div><textarea
                                             id="description"
                                             name="description"
+                                            // value={description}
                                             onChange={this.change}
                                             placeholder="Course description..."
                                         /></div>
@@ -85,6 +88,7 @@ export default class CreateCourse extends Component {
                                                     id="estimatedTime"
                                                     name="estimatedTime"
                                                     type="text"
+                                                    // value={estimatedTime}
                                                     onChange={this.change}
                                                     placeholder="Hours..."
                                                 /></div>
@@ -94,6 +98,7 @@ export default class CreateCourse extends Component {
                                                 <div><textarea
                                                     id="materialsNeeded"
                                                     name="materialsNeeded"
+                                                    // value={materialsNeeded}
                                                     onChange={this.change}
                                                     placeholder="List materials..."
                                                 /></div>
@@ -124,8 +129,8 @@ export default class CreateCourse extends Component {
     submit = () => {
         const {context} = this.props;
         // const authenticatedUser = context.authenticatedUser;
-        // const userEmail = authenticatedUser.emailAddress;
-        // const userPassword = authenticatedUser.password;
+        const userEmail = context.authenticatedUser.emailAddress;
+        const userPassword = context.authenticatedUser.password;
 
         const {
             title,
@@ -144,7 +149,7 @@ export default class CreateCourse extends Component {
             userID
         };
 
-        context.data.createCourse(course)
+        context.data.createCourse(course, userEmail, userPassword)
             .then(errors => {
                 if (errors.length) {
                     this.setState({errors});
