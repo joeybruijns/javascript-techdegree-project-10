@@ -37,16 +37,15 @@ class App extends Component {
                     <HeaderWithContext/>
                     <Switch>
                         <Redirect exact from="/" to="/courses"/>
-                        {/*<Route path="/" component={CoursesWithContext}/>*/}
                         <PrivateRoute path="/courses/create" component={CreateCourseWithContext}/>
+                        <PrivateRoute path="/courses/:id/update" component={UpdateCourseWithContext}/>
                         <Route path="/courses/:id" component={CourseDetailsWithContext}/>
-                        {/*<PrivateRoute path="/courses/:id/update" component={UpdateCourseWithContext}/>*/}
                         <Route path="/courses" component={CoursesWithContext}/>
                         <Route path="/signin" component={UserSignInWithContext}/>
                         <Route path="/signup" component={UserSignUpWithContext}/>
                         <Route path="/signout" component={UserSignOutWithContext}/>
                         <Route path="/error" component={Error}/>
-                        <Route component={NotFound}/> {/*replace with PageNotFound Component??*/}
+                        <Route component={NotFound}/>
                     </Switch>
                 </div>
             </Router>

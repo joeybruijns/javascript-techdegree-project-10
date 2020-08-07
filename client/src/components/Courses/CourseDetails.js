@@ -6,6 +6,7 @@ export default class CourseDetails extends Component {
     state = {
         courseUser: {},
         courseDetails: {},
+        courseMaterials: [],
         authenticatedUser: this.props.context.authenticatedUser
     }
 
@@ -14,9 +15,17 @@ export default class CourseDetails extends Component {
         const {id} = this.props.match.params;
         context.data.getCourseDetails(id)
             .then((response) => {
+                let materials;
+                if (response.course.materialsNeeded) {
+                    materials = response.course.materialsNeeded.split(" ");
+                } else {
+                    materials = [];
+                }
+
                 this.setState({
                     courseUser: response.course.user,
-                    courseDetails: response.course
+                    courseDetails: response.course,
+                    courseMaterials: materials
                 });
             });
     }
@@ -24,6 +33,7 @@ export default class CourseDetails extends Component {
     render() {
         const user = this.state.courseUser;
         const course = this.state.courseDetails;
+        const materials = this.state.courseMaterials;
 
         return (
             <div>
@@ -44,13 +54,15 @@ export default class CourseDetails extends Component {
                             <ul className="course--stats--list">
                                 <li className="course--stats--list--item">
                                     <h4>Estimated Time</h4>
-                                    <h3> {course.estimatedTime} hours</h3> {/*TODO: fix displaying for 0 hours*/}
+                                    {course.estimatedTime ?
+                                        <h3>{course.estimatedTime} hours</h3>
+                                        :
+                                        <h3>-</h3>
+                                    }
                                 </li>
                                 <li className="course--stats--list--item">
-                                    <h4>Materials Needed</h4> {/*TODO: fix rendering*/}
-                                    <ul>
-                                        {/*{course.materialsNeeded.map((item, i) => <li key={i}>{item}</li>)}*/}
-                                    </ul>
+                                    <h4>Materials Needed</h4>
+                                    {materials.map((material, index) => <li key={index}>{material}</li>)}
                                 </li>
                             </ul>
                         </div>
@@ -91,21 +103,20 @@ export default class CourseDetails extends Component {
         }
     }
 
-    deleteCourse = (event) => {
-        event.preventDefault();
-
+    deleteCourse = () => {
         const {context} = this.props;
         const userEmail = this.state.authenticatedUser.emailAddress;
         const userPassword = this.state.authenticatedUser.password;
         const userID = this.state.authenticatedUser.id;
         const userCourseID = this.state.courseUser.id;
         const courseID = this.state.courseDetails.id;
+        const courseName = this.state.courseDetails.title;
 
         if (userID === userCourseID) {
             context.data.deleteCourse(courseID, userEmail, userPassword)
                 .then(response => {
                     if (response) {
-                        console.log(response);
+                        console.log(`Course: "${courseName}" has been deleted...`);
                         this.props.history.push('/');
                     } else {
                         this.props.history.push('/forbidden');
