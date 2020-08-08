@@ -163,7 +163,6 @@ export default class UpdateCourse extends Component {
             .then(errors => {
                 if (errors.length) {
                     this.setState({errors});
-                    // this.props.history.push('/forbidden');
                 } else {
                     console.log('Course successfully updated!');
                     this.props.history.push(`/courses/${courseID}`);
