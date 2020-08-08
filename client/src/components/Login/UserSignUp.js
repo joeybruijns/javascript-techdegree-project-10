@@ -65,7 +65,7 @@ export default class UserSignUp extends Component {
                         />
                     </div>
                     <p>&nbsp;</p>
-                    <p>Already have a user account? <a href="/signin">Click here</a> to sign in!</p>
+                    <p>Already have a user account? <Link to="/signin">Click here</Link> to sign in!</p>
                 </div>
             </div>
         );
@@ -84,6 +84,7 @@ export default class UserSignUp extends Component {
 
     submit = () => {
         const { context } = this.props;
+        const {from} = this.props.location.state || {from: {pathname: '/'}};
         const {
             firstName,
             lastName,
@@ -106,7 +107,7 @@ export default class UserSignUp extends Component {
                 } else {
                     context.actions.signIn(emailAddress, password)
                         .then(() => {
-                            this.props.history.push('/'); // TODO: adjust path
+                            this.props.history.push(from);
                         });
                 }
             })

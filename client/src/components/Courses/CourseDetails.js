@@ -24,19 +24,22 @@ export default class CourseDetails extends Component {
                 // } else {
                 //     materials = [];
                 // }
-
-                this.setState({
-                    courseUser: response.course.user,
-                    courseDetails: response.course
-                    // courseMaterials: materials
-                });
+                if (response) {
+                    this.setState({
+                        courseUser: response.course.user,
+                        courseDetails: response.course
+                        // courseMaterials: materials
+                    });
+                } else {
+                    this.props.history.push('/notfound');
+                }
             });
     }
 
     render() {
         const user = this.state.courseUser;
         const course = this.state.courseDetails;
-        const materials = this.state.courseMaterials;
+        // const materials = this.state.courseMaterials;
 
         return (
             <div>

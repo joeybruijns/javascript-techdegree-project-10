@@ -10,6 +10,7 @@ export default class UpdateCourse extends Component {
         description: '',
         estimatedTime: '',
         materialsNeeded: '',
+        courseUser: '',
         userID: '',
         userName: '',
         errors: []
@@ -21,17 +22,26 @@ export default class UpdateCourse extends Component {
         context.data.getCourseDetails(id)
             .then((response) => {
 
-                this.setState(() => {
-                    return {
-                        courseID: response.course.id,
-                        title: response.course.title,
-                        description: response.course.description,
-                        estimatedTime: response.course.estimatedTime,
-                        materialsNeeded: response.course.materialsNeeded,
-                        userID: context.authenticatedUser.id,
-                        userName: `${context.authenticatedUser.firstName} ${context.authenticatedUser.lastName}`
+                if (response) {
+                    if (response.course.user.id !== context.authenticatedUser.id) {
+                        this.props.history.push('/forbidden');
+                    } else {
+                        this.setState(() => {
+                            return {
+                                courseID: response.course.id,
+                                title: response.course.title,
+                                description: response.course.description,
+                                estimatedTime: response.course.estimatedTime,
+                                materialsNeeded: response.course.materialsNeeded,
+                                courseUser: response.course.user,
+                                userID: context.authenticatedUser.id,
+                                userName: `${context.authenticatedUser.firstName} ${context.authenticatedUser.lastName}`
+                            }
+                        });
                     }
-                });
+                } else {
+                    this.props.history.push('/notfound');
+                }
             });
     }
 

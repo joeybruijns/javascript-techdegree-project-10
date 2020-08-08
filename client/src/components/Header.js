@@ -15,7 +15,7 @@ export default class Header extends React.PureComponent {
                                 <span>Welcome, {userAuth.firstName} {userAuth.lastName}</span>
                                 <a className="signin" href="/signout">Sign Out</a>
                             </React.Fragment>
-                        :
+                            :
                             <React.Fragment>
                                 <a className="signup" href="/signup">Sign Up</a>
                                 <a className="signin" href="/signin">Sign In</a>
@@ -27,4 +27,3 @@ export default class Header extends React.PureComponent {
         )
     }
 };
-

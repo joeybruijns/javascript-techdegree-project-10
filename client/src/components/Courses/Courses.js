@@ -12,7 +12,11 @@ export default class Courses extends Component {
         const {context} = this.props;
         context.data.getCourses()
             .then((response) => {
-                this.setState({courses: response.courses});
+                if (response) {
+                    this.setState({courses: response.courses});
+                } else {
+                    this.props.history.push('/error');
+                }
             });
     }
 

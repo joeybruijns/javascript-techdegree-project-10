@@ -14,7 +14,7 @@ import UpdateCourse from "./components/Courses/UpdateCourse";
 import UserSignUp from "./components/Login/UserSignUp";
 import UserSignIn from "./components/Login/UserSignIn";
 import UserSignOut from "./components/Login/UserSignOut";
-import Error from "./components/Errors/Error";
+import UnhandledError from "./components/Errors/UnhandledError";
 import Forbidden from "./components/Errors/Forbidden";
 import NotFound from "./components/Errors/NotFound";
 
@@ -45,8 +45,9 @@ class App extends Component {
                         <Route path="/signin" component={UserSignInWithContext}/>
                         <Route path="/signup" component={UserSignUpWithContext}/>
                         <Route path="/signout" component={UserSignOutWithContext}/>
-                        <Route path="/error" component={Error}/>
+                        <Route path="/notfound" component={NotFound}/>
                         <Route path="/forbidden" component={Forbidden}/>
+                        <Route path="/error" component={UnhandledError}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </div>
