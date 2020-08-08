@@ -15,6 +15,7 @@ import UserSignUp from "./components/Login/UserSignUp";
 import UserSignIn from "./components/Login/UserSignIn";
 import UserSignOut from "./components/Login/UserSignOut";
 import Error from "./components/Errors/Error";
+import Forbidden from "./components/Errors/Forbidden";
 import NotFound from "./components/Errors/NotFound";
 
 import withContext from "./Context";
@@ -45,6 +46,7 @@ class App extends Component {
                         <Route path="/signup" component={UserSignUpWithContext}/>
                         <Route path="/signout" component={UserSignOutWithContext}/>
                         <Route path="/error" component={Error}/>
+                        <Route path="/forbidden" component={Forbidden}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </div>

@@ -84,8 +84,15 @@ export default class Data {
     }
 
     // PUT course - update an existing course
-    async updateCourse(id, emailAddress, password) {
-
+    async updateCourse(id, course, emailAddress, password) {
+        const response = await this.api(`/courses/${id}`, 'PUT', course, true, {emailAddress, password});
+        if (response.status === 204) {
+            return [];
+        } else if (response.status === 403) {
+            return response.json().then(error => error.errors);
+        } else {
+            throw new Error();
+        }
     }
 
     // DELETE course - delete a course by ID

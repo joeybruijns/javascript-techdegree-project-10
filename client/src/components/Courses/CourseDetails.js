@@ -2,11 +2,14 @@ import React, {Component} from 'react';
 
 import NotFound from "../Errors/NotFound";
 
+const ReactDOM = require('react-dom');
+const ReactMarkdown = require('react-markdown');
+
 export default class CourseDetails extends Component {
     state = {
         courseUser: {},
         courseDetails: {},
-        courseMaterials: [],
+        // courseMaterials: [],
         authenticatedUser: this.props.context.authenticatedUser
     }
 
@@ -15,17 +18,17 @@ export default class CourseDetails extends Component {
         const {id} = this.props.match.params;
         context.data.getCourseDetails(id)
             .then((response) => {
-                let materials;
-                if (response.course.materialsNeeded) {
-                    materials = response.course.materialsNeeded.split(" ");
-                } else {
-                    materials = [];
-                }
+                // let materials;
+                // if (response.course.materialsNeeded) {
+                //     materials = response.course.materialsNeeded.split(" ");
+                // } else {
+                //     materials = [];
+                // }
 
                 this.setState({
                     courseUser: response.course.user,
-                    courseDetails: response.course,
-                    courseMaterials: materials
+                    courseDetails: response.course
+                    // courseMaterials: materials
                 });
             });
     }
@@ -46,7 +49,7 @@ export default class CourseDetails extends Component {
                             <p>By {user.firstName} {user.lastName}</p>
                         </div>
                         <div className="course--description">
-                            <p>{course.description}</p>
+                            <p>{<ReactMarkdown source={course.description}/>}</p>
                         </div>
                     </div>
                     <div className="grid-25 grid-right">
@@ -62,7 +65,8 @@ export default class CourseDetails extends Component {
                                 </li>
                                 <li className="course--stats--list--item">
                                     <h4>Materials Needed</h4> {/*TODO: fix <li> warning*/}
-                                    {materials.map((material, index) => <li key={index}>{material}</li>)}
+                                    {/*{materials.map((material, index) => <li key={index}>{material}</li>)}*/}
+                                    {<ReactMarkdown source={course.materialsNeeded}/>}
                                 </li>
                             </ul>
                         </div>
