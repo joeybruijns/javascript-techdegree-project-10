@@ -7,15 +7,44 @@ In addition, the project will require users to create an account and sign in to 
 
 For this project, we’ll use React, JSX, React Router, React Context API, and Create React App.
 
-## Getting Started
+## Getting Started - Part 1
 
-To get up and running with this project, run the following commands from the root of the folder that contains this README file.
+To get up and running with this project, run the following commands from the api folder that is contained in the root directory.
 
-First, install the project's dependencies using `npm`.
+First, install the project's dependencies using `npm`:
+
+```
+npm install
+
+```
+Secondly, seed the SQLite database:
+
+```
+npm run seed
+```
+
+Lastly, start the application with:
+
+```
+npm start
+```
+
+The Express server is running on *localhost:5000*. 
+
+## Getting Started - Part 2
+Open a second Terminal window to run the client side of the application, and go to the client folder contained in the root directory.
+
+First, install the project's dependencies using `npm`:
 
 ```
 npm install
 
 ```
 
-....
+After this, start the application with:
+
+```
+npm start
+```
+
+Browse to *localhost:3000* to test the application.
