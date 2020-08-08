@@ -83,7 +83,7 @@ export default class UserSignUp extends Component {
     }
 
     submit = () => {
-        const { context } = this.props;
+        const {context} = this.props;
         const {from} = this.props.location.state || {from: {pathname: '/'}};
         const {
             firstName,
@@ -100,10 +100,11 @@ export default class UserSignUp extends Component {
             password,
         };
 
+        // Create a new user account and sign them in to the app
         context.data.createUser(user)
-            .then( errors => {
+            .then(errors => {
                 if (errors.length) {
-                    this.setState({ errors });
+                    this.setState({errors});
                 } else {
                     context.actions.signIn(emailAddress, password)
                         .then(() => {

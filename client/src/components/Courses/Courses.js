@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
 import CourseComponent from "./CourseComponent";
-import NotFound from "../Errors/NotFound";
 
 export default class Courses extends Component {
     state = {

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 
 import Form from '../Form';
 
@@ -16,6 +15,7 @@ export default class UpdateCourse extends Component {
         errors: []
     }
 
+    // Get the right course info from the database when the component loads
     async componentDidMount() {
         const {context} = this.props;
         const {id} = this.props.match.params;
@@ -158,11 +158,12 @@ export default class UpdateCourse extends Component {
             materialsNeeded
         };
 
+        // Update the course with the new values
         context.data.updateCourse(courseID, course, userEmail, userPassword)
             .then(errors => {
                 if (errors.length) {
-                    // this.setState({errors});
-                    this.props.history.push('/forbidden');
+                    this.setState({errors});
+                    // this.props.history.push('/forbidden');
                 } else {
                     console.log('Course successfully updated!');
                     this.props.history.push(`/courses/${courseID}`);

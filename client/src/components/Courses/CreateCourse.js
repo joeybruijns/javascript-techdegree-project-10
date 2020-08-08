@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 
 import Form from '../Form';
 
@@ -143,7 +142,7 @@ export default class CreateCourse extends Component {
                     this.setState({errors});
                 } else {
                     console.log('Course successfully created!');
-                    this.props.history.push(`/course/${course.id}`);
+                    this.props.history.push(`/`);
                 }
             })
             .catch(err => {

@@ -73,7 +73,7 @@ router.post('/users', [
     // check if the email is already in use
     const userEmail = getAllUserEmail();
     if ((await userEmail).includes(user.emailAddress)) {
-        return res.status(400).json({errors: 'Email is already in use'});
+        return res.status(400).json({errors: ['Email is already in use']});
     }
 
     // create the new user
@@ -214,7 +214,7 @@ router.put('/courses/:id', authenticateUser, [
             // set status to 204 No Content and end the response
             return res.status(204).end();
         } else {
-            return res.status(403).json({errors: "User is not authorized"});
+            return res.status(403).json({errors: ["User is not authorized"]});
         }
     } else {
         // handle errors
@@ -236,7 +236,7 @@ router.delete('/courses/:id', authenticateUser, asyncHandler(async (req, res, ne
             // set status to 204 No Content and end the response
             return res.status(204).end();
         } else {
-            return res.status(403).json({errors: "User is not authorized"});
+            return res.status(403).json({errors: ["User is not authorized"]});
         }
     } else {
         // handle errors

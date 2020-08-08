@@ -1,34 +1,24 @@
 import React, {Component} from 'react';
 
-import NotFound from "../Errors/NotFound";
-
-const ReactDOM = require('react-dom');
 const ReactMarkdown = require('react-markdown');
 
 export default class CourseDetails extends Component {
     state = {
         courseUser: {},
         courseDetails: {},
-        // courseMaterials: [],
         authenticatedUser: this.props.context.authenticatedUser
     }
 
+    // Get the right course info from the database when the component loads
     async componentDidMount() {
         const {context} = this.props;
         const {id} = this.props.match.params;
         context.data.getCourseDetails(id)
             .then((response) => {
-                // let materials;
-                // if (response.course.materialsNeeded) {
-                //     materials = response.course.materialsNeeded.split(" ");
-                // } else {
-                //     materials = [];
-                // }
                 if (response) {
                     this.setState({
                         courseUser: response.course.user,
                         courseDetails: response.course
-                        // courseMaterials: materials
                     });
                 } else {
                     this.props.history.push('/notfound');
@@ -39,7 +29,6 @@ export default class CourseDetails extends Component {
     render() {
         const user = this.state.courseUser;
         const course = this.state.courseDetails;
-        // const materials = this.state.courseMaterials;
 
         return (
             <div>
@@ -52,7 +41,7 @@ export default class CourseDetails extends Component {
                             <p>By {user.firstName} {user.lastName}</p>
                         </div>
                         <div className="course--description">
-                            <p>{<ReactMarkdown source={course.description}/>}</p>
+                            {<ReactMarkdown source={course.description}/>}
                         </div>
                     </div>
                     <div className="grid-25 grid-right">
@@ -67,8 +56,7 @@ export default class CourseDetails extends Component {
                                     }
                                 </li>
                                 <li className="course--stats--list--item">
-                                    <h4>Materials Needed</h4> {/*TODO: fix <li> warning*/}
-                                    {/*{materials.map((material, index) => <li key={index}>{material}</li>)}*/}
+                                    <h4>Materials Needed</h4>
                                     {<ReactMarkdown source={course.materialsNeeded}/>}
                                 </li>
                             </ul>
@@ -79,7 +67,7 @@ export default class CourseDetails extends Component {
         )
     };
 
-    // hide or show the edit/delete button, depends if the user is authorized
+    // Hide or show the update and delete button, depending if the user is authorized or not
     authenticationLevel = () => {
         const userAuth = this.props.context.authenticatedUser;
 
@@ -110,6 +98,7 @@ export default class CourseDetails extends Component {
         }
     }
 
+    // Delete the course if the user is authorizes to do so
     deleteCourse = () => {
         const {context} = this.props;
         const userEmail = this.state.authenticatedUser.emailAddress;

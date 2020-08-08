@@ -69,6 +69,7 @@ export default class UserSignIn extends Component {
         const {from} = this.props.location.state || {from: {pathname: '/'}};
         const {emailAddress, password} = this.state;
 
+        // Sign the user in and redirect them
         context.actions.signIn(emailAddress, password)
             .then((user) => {
                 if (user === null) {
