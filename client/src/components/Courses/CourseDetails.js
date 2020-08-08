@@ -61,7 +61,7 @@ export default class CourseDetails extends Component {
                                     }
                                 </li>
                                 <li className="course--stats--list--item">
-                                    <h4>Materials Needed</h4>
+                                    <h4>Materials Needed</h4> {/*TODO: fix <li> warning*/}
                                     {materials.map((material, index) => <li key={index}>{material}</li>)}
                                 </li>
                             </ul>
