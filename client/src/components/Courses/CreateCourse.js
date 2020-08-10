@@ -13,6 +13,9 @@ export default class CreateCourse extends Component {
         errors: []
     }
 
+    /**
+     * Set state for userID and userName when component loads
+     */
     async componentDidMount() {
         const {context} = this.props;
         this.setState(() => {
@@ -50,7 +53,7 @@ export default class CreateCourse extends Component {
                                         id="title"
                                         name="title"
                                         type="text"
-                                        defaultValue={title}
+                                        value={title}
                                         onChange={this.change}
                                         className="input-title course--title--input"
                                         placeholder="Course title..."
@@ -61,7 +64,7 @@ export default class CreateCourse extends Component {
                                     <div><textarea
                                         id="description"
                                         name="description"
-                                        defaultValue={description}
+                                        value={description}
                                         onChange={this.change}
                                         className="course--description"
                                         placeholder="Course description..."
@@ -77,7 +80,7 @@ export default class CreateCourse extends Component {
                                                 id="estimatedTime"
                                                 name="estimatedTime"
                                                 type="text"
-                                                defaultValue={estimatedTime}
+                                                value={estimatedTime}
                                                 onChange={this.change}
                                                 className="course--time--input"
                                                 placeholder="Hours..."
@@ -88,7 +91,7 @@ export default class CreateCourse extends Component {
                                             <div><textarea
                                                 id="materialsNeeded"
                                                 name="materialsNeeded"
-                                                defaultValue={materialsNeeded}
+                                                value={materialsNeeded}
                                                 onChange={this.change}
                                                 placeholder="List materials..."
                                             /></div>
@@ -103,6 +106,10 @@ export default class CreateCourse extends Component {
         );
     };
 
+    /**
+     * Update the input fields
+     * @param event - Listen for changes on the input fields
+     */
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -114,6 +121,9 @@ export default class CreateCourse extends Component {
         });
     }
 
+    /**
+     * Submit the new course to the API
+     */
     submit = () => {
         const {context} = this.props;
         const userEmail = context.authenticatedUser.emailAddress;
@@ -127,7 +137,7 @@ export default class CreateCourse extends Component {
             userID
         } = this.state;
 
-        // New course payload
+        // new course payload
         const course = {
             title,
             description,
@@ -136,6 +146,12 @@ export default class CreateCourse extends Component {
             userID
         };
 
+        /**
+         * Send a request to the API creating a new course
+         * @param{object} course - contains the course to submit
+         * @param{string} emailAddress - user email
+         * @param{string} password - user password
+         */
         context.data.createCourse(course, userEmail, userPassword)
             .then(errors => {
                 if (errors.length) {
@@ -151,6 +167,9 @@ export default class CreateCourse extends Component {
             });
     }
 
+    /**
+     * Cancel course creation and redirect to the home route
+     */
     cancel = () => {
         this.props.history.push('/');
     }

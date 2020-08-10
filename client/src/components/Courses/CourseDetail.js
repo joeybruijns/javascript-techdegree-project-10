@@ -2,14 +2,16 @@ import React, {Component} from 'react';
 
 const ReactMarkdown = require('react-markdown');
 
-export default class CourseDetails extends Component {
+export default class CourseDetail extends Component {
     state = {
         courseUser: {},
         courseDetails: {},
         authenticatedUser: this.props.context.authenticatedUser
     }
 
-    // Get the right course info from the database when the component loads
+    /**
+     * Get the right course info from the database when the component loads
+     */
     async componentDidMount() {
         const {context} = this.props;
         const {id} = this.props.match.params;
@@ -67,7 +69,10 @@ export default class CourseDetails extends Component {
         )
     };
 
-    // Hide or show the update and delete button, depending if the user is authorized or not
+    /**
+     * Hide or show the update and delete button, depending if the user is authorized or not
+     * @returns {JSX.Element}
+     */
     authenticationLevel = () => {
         const userAuth = this.props.context.authenticatedUser;
 
@@ -98,7 +103,9 @@ export default class CourseDetails extends Component {
         }
     }
 
-    // Delete the course if the user is authorizes to do so
+    /**
+     * Delete the course if the user is authorizes to do so
+     */
     deleteCourse = () => {
         const {context} = this.props;
         const userEmail = this.state.authenticatedUser.emailAddress;

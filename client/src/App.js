@@ -8,7 +8,7 @@ import {
 
 import Header from "./components/Header";
 import Courses from "./components/Courses/Courses";
-import CourseDetails from "./components/Courses/CourseDetails";
+import CourseDetail from "./components/Courses/CourseDetail";
 import CreateCourse from "./components/Courses/CreateCourse";
 import UpdateCourse from "./components/Courses/UpdateCourse";
 import UserSignUp from "./components/Login/UserSignUp";
@@ -23,7 +23,7 @@ import PrivateRoute from "./PrivateRoute";
 
 const HeaderWithContext = withContext(Header);
 const CoursesWithContext = withContext(Courses);
-const CourseDetailsWithContext = withContext(CourseDetails);
+const CourseDetailWithContext = withContext(CourseDetail);
 const CreateCourseWithContext = withContext(CreateCourse);
 const UpdateCourseWithContext = withContext(UpdateCourse);
 const UserSignUpWithContext = withContext(UserSignUp);
@@ -40,7 +40,7 @@ class App extends Component {
                         <Redirect exact from="/" to="/courses"/>
                         <PrivateRoute path="/courses/create" component={CreateCourseWithContext}/>
                         <PrivateRoute path="/courses/:id/update" component={UpdateCourseWithContext}/>
-                        <Route path="/courses/:id" component={CourseDetailsWithContext}/>
+                        <Route path="/courses/:id" component={CourseDetailWithContext}/>
                         <Route path="/courses" component={CoursesWithContext}/>
                         <Route path="/signin" component={UserSignInWithContext}/>
                         <Route path="/signup" component={UserSignUpWithContext}/>

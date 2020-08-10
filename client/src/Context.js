@@ -5,7 +5,6 @@ import Data from './Data';
 const Context = React.createContext();
 
 export class Provider extends Component {
-
     state = {
         authenticatedUser: Cookies.getJSON('authenticatedUser') || null,
     };
@@ -32,6 +31,12 @@ export class Provider extends Component {
         );
     }
 
+    /**
+     * Sign a user in if values for email and password match
+     * @param {string} email - User email
+     * @param {string} password - User password
+     * @returns {Promise<null|undefined>}
+     */
     signIn = async (email, password) => {
         const user = await this.data.getUser(email, password);
         if (user !== null) {
@@ -47,6 +52,9 @@ export class Provider extends Component {
         return user;
     }
 
+    /**
+     * Sign the user out, set state for authenticatedUser to null ans remove cookies
+     */
     signOut = () => {
         this.setState({authenticatedUser: null});
         Cookies.remove('authenticatedUser');

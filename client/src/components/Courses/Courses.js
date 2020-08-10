@@ -7,6 +7,10 @@ export default class Courses extends Component {
         courses: []
     }
 
+    /**
+     * Get all the courses from the database when the component loads
+     * @returns {Promise<void>}
+     */
     async componentDidMount() {
         const {context} = this.props;
         context.data.getCourses()

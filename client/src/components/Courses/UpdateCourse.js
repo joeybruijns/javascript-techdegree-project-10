@@ -15,7 +15,10 @@ export default class UpdateCourse extends Component {
         errors: []
     }
 
-    // Get the right course info from the database when the component loads
+    /**
+     * Get the right course info from the database when the component loads
+     * @returns {Promise<void>}
+     */
     async componentDidMount() {
         const {context} = this.props;
         const {id} = this.props.match.params;
@@ -72,7 +75,7 @@ export default class UpdateCourse extends Component {
                                         id="title"
                                         name="title"
                                         type="text"
-                                        defaultValue={title}
+                                        value={title}
                                         onChange={this.change}
                                         className="input-title course--title--input"
                                         placeholder="Course title..."
@@ -83,7 +86,7 @@ export default class UpdateCourse extends Component {
                                     <div><textarea
                                         id="description"
                                         name="description"
-                                        defaultValue={description}
+                                        value={description}
                                         onChange={this.change}
                                         className="course--description"
                                         placeholder="Course description..."
@@ -99,7 +102,7 @@ export default class UpdateCourse extends Component {
                                                 id="estimatedTime"
                                                 name="estimatedTime"
                                                 type="text"
-                                                defaultValue={estimatedTime}
+                                                value={estimatedTime}
                                                 onChange={this.change}
                                                 className="course--time--input"
                                                 placeholder="Hours..."
@@ -110,7 +113,7 @@ export default class UpdateCourse extends Component {
                                             <div><textarea
                                                 id="materialsNeeded"
                                                 name="materialsNeeded"
-                                                defaultValue={materialsNeeded}
+                                                value={materialsNeeded}
                                                 onChange={this.change}
                                                 placeholder="List materials..."
                                             /></div>
@@ -125,6 +128,10 @@ export default class UpdateCourse extends Component {
         );
     };
 
+    /**
+     * Update the input fields
+     * @param event - Listen for changes on the input fields
+     */
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -136,6 +143,9 @@ export default class UpdateCourse extends Component {
         });
     }
 
+    /**
+     * Submit the updated course to the API
+     */
     submit = () => {
         const {context} = this.props;
         const userEmail = context.authenticatedUser.emailAddress;
@@ -149,7 +159,7 @@ export default class UpdateCourse extends Component {
             materialsNeeded
         } = this.state;
 
-        // Updated course payload
+        // updated course payload
         const course = {
             courseID,
             title,
@@ -158,7 +168,13 @@ export default class UpdateCourse extends Component {
             materialsNeeded
         };
 
-        // Update the course with the new values
+        /**
+         * Send request to the API to update a course
+         * @param{string} courseID - The ID of the current course
+         * @param{object} course - Contains the course to submit
+         * @param{string} emailAddress - User email
+         * @param{string} password - User password
+         */
         context.data.updateCourse(courseID, course, userEmail, userPassword)
             .then(errors => {
                 if (errors.length) {
@@ -174,6 +190,9 @@ export default class UpdateCourse extends Component {
             });
     }
 
+    /**
+     * Cancel updating the course and redirect to the home route
+     */
     cancel = () => {
         const courseID = this.state.courseID;
         this.props.history.push(`/courses/${courseID}`);

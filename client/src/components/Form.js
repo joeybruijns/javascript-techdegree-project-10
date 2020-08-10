@@ -33,6 +33,12 @@ export default (props) => {
     );
 }
 
+/**
+ * Display error messages that might be returned by the API
+ * @param {array} errors - A possible array of errors returned by the API
+ * @returns {null} errorDisplay - The errorDisplay that is either null or an JSX.Element
+ * @constructor
+ */
 function ErrorsDisplay({errors}) {
     let errorsDisplay = null;
 

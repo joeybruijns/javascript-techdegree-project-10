@@ -71,6 +71,10 @@ export default class UserSignUp extends Component {
         );
     }
 
+    /**
+     * Update the input fields
+     * @param event - Listen for changes on the input fields
+     */
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -82,6 +86,9 @@ export default class UserSignUp extends Component {
         });
     }
 
+    /**
+     * Submit the new user to the API
+     */
     submit = () => {
         const {context} = this.props;
         const {from} = this.props.location.state || {from: {pathname: '/'}};
@@ -92,7 +99,6 @@ export default class UserSignUp extends Component {
             password,
         } = this.state;
 
-        // Create user
         const user = {
             firstName,
             lastName,
@@ -119,6 +125,9 @@ export default class UserSignUp extends Component {
 
     }
 
+    /**
+     * Cancel user signup and redirect to the home route
+     */
     cancel = () => {
         this.props.history.push('/');
     }

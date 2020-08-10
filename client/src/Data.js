@@ -1,6 +1,15 @@
 import config from './config';
 
 export default class Data {
+    /**
+     * The method that builds the request to the API
+     * @param {string} path - The path for the route
+     * @param {string} method - The HTTP request method
+     * @param {object} body - The body of the request
+     * @param {boolean} requiresAuth - Set if authentication is required or not
+     * @param {object} credentials - Object with user credentials
+     * @returns {Promise<Response>}
+     */
     api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) {
         const url = config.apiBaseUrl + path;
 
@@ -22,7 +31,12 @@ export default class Data {
         return fetch(url, options);
     }
 
-    // GET user - get the user from the database
+    /**
+     * Get the user from the database
+     * @param {string} emailAddress - User email
+     * @param {string} password - User password
+     * @returns {Promise<null|any>}
+     */
     async getUser(emailAddress, password) {
         const response = await this.api(`/users`, 'GET', null, true, {emailAddress, password});
         if (response.status === 200) {
@@ -35,7 +49,11 @@ export default class Data {
         }
     }
 
-    // POST user - create a new user
+    /**
+     * Create a new user
+     * @param {object} user - A new user object
+     * @returns {Promise<any|*[]>}
+     */
     async createUser(user) {
         const response = await this.api('/users', 'POST', user);
         if (response.status === 201) {
@@ -47,7 +65,10 @@ export default class Data {
         }
     }
 
-    // GET courses -  all the courses from the database
+    /**
+     * Get all the courses from the database
+     * @returns {Promise<*>}
+     */
     async getCourses() {
         const response = await this.api(`/courses`, 'GET');
         if (response.status === 200) {
@@ -59,7 +80,11 @@ export default class Data {
         }
     }
 
-    // GET course -  a single course from the database
+    /**
+     * Get a single course from the database that matches the specified ID
+     * @param {string} id - The course ID
+     * @returns {Promise<*>}
+     */
     async getCourseDetails(id) {
         const response = await this.api(`/courses/${id}`, 'GET');
         if (response.status === 200) {
@@ -71,7 +96,13 @@ export default class Data {
         }
     }
 
-    // POST course - create a new course
+    /**
+     * Create a new course
+     * @param {object} course - The new course object
+     * @param {string} emailAddress - User email
+     * @param {string} password - User password
+     * @returns {Promise<*[]|*>}
+     */
     async createCourse(course, emailAddress, password) {
         const response = await this.api(`/courses`, 'POST', course, true, {emailAddress, password});
         if (response.status === 201) {
@@ -83,19 +114,32 @@ export default class Data {
         }
     }
 
-    // PUT course - update an existing course
+    /**
+     * Update an existing course
+     * @param {string} id - The course ID
+     * @param {object} course - The updated course object
+     * @param {string} emailAddress - User email
+     * @param {string} password - user password
+     * @returns {Promise<*[]|*>}
+     */
     async updateCourse(id, course, emailAddress, password) {
         const response = await this.api(`/courses/${id}`, 'PUT', course, true, {emailAddress, password});
         if (response.status === 204) {
             return [];
-        } else if (response.status === 403) {
+        } else if (response.status === 400) {
             return response.json().then(error => error.errors);
         } else {
             throw new Error();
         }
     }
 
-    // DELETE course - delete a course by ID
+    /**
+     * Delete a course by ID
+     * @param {string} id - The course ID
+     * @param {string} emailAddress - User email
+     * @param {string} password - user password
+     * @returns {Promise<*[]|*>}
+     */
     async deleteCourse(id, emailAddress, password) {
         const response = await this.api(`/courses/${id}`, 'DELETE', null, true, {emailAddress, password});
         if (response.status === 204) {

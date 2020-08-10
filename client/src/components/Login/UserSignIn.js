@@ -64,6 +64,9 @@ export default class UserSignIn extends Component {
         });
     }
 
+    /**
+     * Check credentials and sign a user in
+     */
     submit = () => {
         const {context} = this.props;
         const {from} = this.props.location.state || {from: {pathname: '/'}};
@@ -87,6 +90,9 @@ export default class UserSignIn extends Component {
             });
     }
 
+    /**
+     * Cancel user sign-in and redirect to the home route
+     */
     cancel = () => {
         this.props.history.push('/');
     }
