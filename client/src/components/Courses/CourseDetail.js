@@ -25,6 +25,10 @@ export default class CourseDetail extends Component {
                 } else {
                     this.props.history.push('/notfound');
                 }
+            })
+            .catch(errors => {
+                console.log(errors);
+                this.props.history.push('/error');
             });
     }
 

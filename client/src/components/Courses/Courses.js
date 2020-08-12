@@ -20,6 +20,10 @@ export default class Courses extends Component {
                 } else {
                     this.props.history.push('/error');
                 }
+            })
+            .catch(errors => {
+                console.log(errors);
+                this.props.history.push('/error');
             });
     }
 
